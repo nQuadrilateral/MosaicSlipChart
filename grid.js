@@ -30,16 +30,15 @@ function init_chart() {
             cell.id = i.toString() + '-' + j.toString();
             cell.addEventListener("click", clickCell)
             if (i%2 == 0) {
-                cell.style.backgroundColor = "#fff";
+                cell.style.background = "white";
             } else {
-                cell.style.backgroundColor = "#000";
+                cell.style.background = "black";
             }
             document.getElementById('chart').append(cell);
             row.push(cell);
         }
         grid.push(row);
     }
-    console.log(grid);
 }
 
 function toMarkers() {

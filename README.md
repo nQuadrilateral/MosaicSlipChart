@@ -5,5 +5,5 @@ This is a simple 10x10 grid editor with 3 different visualizations:
 - The slip view that colors marked cells to a color I have not programed customization for yet.
 
 # Sources & References:
-*A mathematical analysis of mosaic knitting: constraints, combinatorics, and colour-swapping symmetries* By S. Goldstine & C. Yackle
-[*Code Minesweeper Game with Javascript*](https://www.youtube.com/watch?v=AfhfAxKFP-s) By @KennyYipCoding on Youtube
+- *A mathematical analysis of mosaic knitting: constraints, combinatorics, and colour-swapping symmetries* By S. Goldstine & C. Yackle
+- [*Code Minesweeper Game with Javascript*](https://www.youtube.com/watch?v=AfhfAxKFP-s) By @KennyYipCoding on Youtube
