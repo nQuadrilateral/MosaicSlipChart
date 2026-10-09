@@ -1,20 +1,19 @@
 // Author: Naeem Khwajazada
 // Init variables
-var grid = [];
 var rows = 10;
 var cols = rows;
 // State Variable
-var displayMode = "MARKERS";
+var displayMode = "markers";
 // Fun variables
 var color1 = "lightblue";
 var color2 = "white";
 
 window.onload = function() {
-    init_chart();
+    initDisplayButtons();
+    initChart();
 }
 
-// initializes the grid and sets a default state
-function init_chart() {
+function initDisplayButtons() {
     // Init Buttons
     const button = document.getElementById("markers");
     button.style.background = "#444";
@@ -22,9 +21,13 @@ function init_chart() {
     button.addEventListener("click", toMarkers);
     document.getElementById("mosaic").addEventListener("click", toMosaic);
     document.getElementById("slip").addEventListener("click", toSlip);
-    // Init grid
+    document.getElementById("chart-change").addEventListener("click", newChart);
+}
+
+// initializes the chart and sets a default state
+function initChart() {
+    // Init chart
     for(let i=0; i<rows; i++) {
-        let row = [];
         for(let j=0; j<cols; j++) {
             let cell = document.createElement("div");
             cell.id = i.toString() + '-' + j.toString();
@@ -35,28 +38,47 @@ function init_chart() {
                 cell.style.background = "black";
             }
             document.getElementById('chart').append(cell);
-            row.push(cell);
         }
-        grid.push(row);
     }
+}
+
+function newChart() {
+    // clear chart
+    for (let i=0; i<rows; i++) {
+        for (let j=0; j<cols; j++) {
+            element = document.getElementById(i + "-" + j);
+            element.remove();
+        }
+    }
+    // reset states
+    document.getElementById(displayMode).disabled = false;
+    document.getElementById(displayMode).style.background = "#888";
+    displayMode = "markers";
+    document.getElementById(displayMode).disabled = true;
+    document.getElementById(displayMode).style.background = "#444";
+    // set new chart
+    const cellCount = document.getElementById("x-cells").valueAsNumber;
+    const chartSize = document.getElementById("chart").getBoundingClientRect().width - 2;
+    const newCellSize = chartSize / cellCount - 2;
+    const root = document.documentElement;
+    root.style.setProperty("--cell-size", String(newCellSize) + "px");
+    console.log(chartSize / cellCount - 2);
+    rows = cellCount;
+    cols = cellCount;
+    initChart();
 }
 
 function toMarkers() {
     this.style.background = "#444";
     this.setAttribute("disabled", "disabled");
-    if (document.getElementById("mosaic").disabled == true) {
-        document.getElementById("mosaic").disabled = false;
-        document.getElementById("mosaic").style.background = "#888";
-    } else {
-        document.getElementById("slip").disabled = false;
-        document.getElementById("slip").style.background = "#888";
-    }
-    if (displayMode === "MOSAIC") {
+    document.getElementById(displayMode).disabled = false;
+    document.getElementById(displayMode).style.background = "#888";
+    if (displayMode === "mosaic") {
         mosaicToMarkers();
     } else {
         slipToMarkers();
     }
-    displayMode = "MARKERS";
+    displayMode = "markers";
 }
 
 function slipToMarkers() {
@@ -94,19 +116,14 @@ function mosaicToMarkers() {
 function toMosaic() {
     this.style.background = "#444";
     this.setAttribute("disabled", "disabled");
-    if (document.getElementById("markers").disabled == true) {
-        document.getElementById("markers").disabled = false;
-        document.getElementById("markers").style.background = "#888";
-    } else {
-        document.getElementById("slip").disabled = false;
-        document.getElementById("slip").style.background = "#888";
-    }
-    if (displayMode === "MARKERS") {
+    document.getElementById(displayMode).disabled = false;
+    document.getElementById(displayMode).style.background = "#888";
+    if (displayMode === "markers") {
         markersToMosaic();
     } else {
         slipToMosaic();
     }
-    displayMode = "MOSAIC";
+    displayMode = "mosaic";
 }
 
 function markersToMosaic() {
@@ -143,19 +160,14 @@ function slipToMosaic() {
 function toSlip() {
     this.style.background = "#444";
     this.setAttribute("disabled", "disabled");
-    if (document.getElementById("markers").disabled == true) {
-        document.getElementById("markers").disabled = false;
-        document.getElementById("markers").style.background = "#888";
-    } else {
-        document.getElementById("mosaic").disabled = false;
-        document.getElementById("mosaic").style.background = "#888";
-    }
-    if (displayMode === "MARKERS") {
+    document.getElementById(displayMode).disabled = false;
+    document.getElementById(displayMode).style.background = "#888";
+    if (displayMode === "markers") {
         markersToSlip();
     } else {
         mosaicToSlip();
     }
-    displayMode = "SLIP";
+    displayMode = "slip";
 }
 
 function markersToSlip() {
@@ -188,19 +200,19 @@ function mosaicToSlip() {
 
 function clickCell() {
     let cell = this;
-    if (displayMode === "MARKERS") {
+    if (displayMode === "markers") {
         if (cell.innerText == "") {
             cell.innerText = "X";
         } else {
             cell.innerText = "";
         }
-    } else if (displayMode === "MOSAIC") {
+    } else if (displayMode === "mosaic") {
         if (cell.style.background == "white") {
             cell.style.background = "black";
         } else {
             cell.style.background = "white";
         }
-    } else if (displayMode === "SLIP") {
+    } else if (displayMode === "slip") {
         if (cell.style.background == color1) {
             cell.style.background = color2;
         } else {

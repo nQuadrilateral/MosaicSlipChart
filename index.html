@@ -9,13 +9,21 @@
         <script src="./grid.js"></script>
     </head>
     <body>
-        <h1>This is a demo (10x10)</h1>
+        <h1>Demo for: (nxn) scaling</h1>
+        <div class="button-menu">
+            <div class="input-lable">
+                <p>n =</p>
+                <input type="number" id="x-cells" value="10">
+            </div>
+            <button id="chart-change" style="font-size: 15px;">Apply n (clears grid)</button>
+        </div>
+        <br>
         <div class="grid" id="chart"></div>
         <br>
-        <div id="displayMenu">
-            <button class="edit" id="markers">Markers</button>
-            <button class="edit" id="mosaic">Mosaic</button>
-            <button class="edit" id="slip">Slip</button>
+        <div class="button-menu">
+            <button id="markers">Markers</button>
+            <button id="mosaic">Mosaic</button>
+            <button id="slip">Slip</button>
         </div>
     </body>
 </html>
