@@ -1,7 +1,11 @@
 /* Author: Naeem Khwajazada */
 :root {
-    --chart-size-x: 500px; /* default size for 10x10 */
-    --cell-size: calc(calc((var(--chart-size-x) / 10)) - 2px); /* default size for 10x10 */
+    /* adjust this if you want the chart to be smaller no matter the scaling */
+    --chart-size-max: 600px;
+    --chart-size-x: var(--chart-size-max);
+    --chart-size-y: var(--chart-size-max);
+    /* start with a 10x10 */
+    --cell-size: calc(calc((var(--chart-size-x) / 10)) - 2px);
 }
 
 body {
@@ -11,19 +15,28 @@ body {
     text-align: center;
 }
 
-.grid {
+#grid {
+    /* shape */
+    width: calc(var(--chart-size-max) + 2px);
+    height: calc(var(--chart-size-max) + 2px);
+    /* placement */
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+#chart {
     /* shape */
     width: var(--chart-size-x);
-    height: var(--chart-size-x);
+    height: var(--chart-size-y);
     border: 1px solid black;
-    background: greenyellow;
     /* placement */
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
 }
 
-.grid div {
+#chart div {
     /* shape */
     width: var(--cell-size);
     height: var(--cell-size);

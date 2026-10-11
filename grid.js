@@ -1,7 +1,7 @@
 // Author: Naeem Khwajazada
 // Init variables
-var rows = 10;
-var cols = rows;
+var cols = 10; // m
+var rows = cols; // n
 // State Variable
 var displayMode = "markers";
 // Fun variables
@@ -56,15 +56,21 @@ function newChart() {
     displayMode = "markers";
     document.getElementById(displayMode).disabled = true;
     document.getElementById(displayMode).style.background = "#444";
-    // set new chart
-    const cellCount = document.getElementById("x-cells").valueAsNumber;
-    const chartSize = document.getElementById("chart").getBoundingClientRect().width - 2;
-    const newCellSize = chartSize / cellCount - 2;
+    // get n, m, & external grid size
+    rows = document.getElementById("n-cells").valueAsNumber;
+    cols = document.getElementById("m-cells").valueAsNumber;
+    const chartSize = document.getElementById("grid").getBoundingClientRect().width - 2;
+    // determine size of cells based on the smaller axis
+    let newCellSize = (chartSize / rows) - 2;
+    if (rows < cols) {
+        newCellSize = (chartSize / cols) - 2;
+    }
+    // rescale internal grid
     const root = document.documentElement;
+    root.style.setProperty("--chart-size-x", String((newCellSize + 2) * cols) + "px");
+    root.style.setProperty("--chart-size-y", String((newCellSize + 2) * rows) + "px");
     root.style.setProperty("--cell-size", String(newCellSize) + "px");
-    console.log(chartSize / cellCount - 2);
-    rows = cellCount;
-    cols = cellCount;
+    // rebuild chart
     initChart();
 }
 
